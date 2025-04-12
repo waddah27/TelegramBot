@@ -9,6 +9,19 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
+class TextMessage:
+    def __init__(self, text: str):
+        self.update = Update
+        self.text = text
+
+
+    async def start(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        chat_id = update.effective_chat.id
+        print(f"CHAT_ID = {chat_id}")  # Print chat_id to console
+        await context.bot.send_message(chat_id=chat_id, text=self.text)
+
+    async def send(self, app: ApplicationBuilder):
+        await app.bot.send_message(chat_id=CHAT_ID, text=self.text)
 
 # This function sends a message to the user when the bot is started
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -67,7 +80,7 @@ def main():
     app = ApplicationBuilder().token(TOKEN).build()
 
     # Start the bot
-    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("start", TextMessage("✅ Bot is alive and responding!").start))
     app.add_handler(CommandHandler("send_file", send_file))
     app.add_handler(CommandHandler("send_image", send_image))
 
