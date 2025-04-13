@@ -1,9 +1,9 @@
 import logging
 import asyncio
-from consts import TOKEN, CHAT_ID
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
-
+from authorities import TOKEN, CHAT_ID
+from configs import TEST_IMG_PATH, TEST_FILE_PATH
 # Turn on logging to see what the bot is doing
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -34,18 +34,16 @@ async def send_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
     file_path = 'D:\Job\DecorAuto\TelegramBot\hello.txt'
 
     # Send the file to the chat
-    await context.bot.send_document(chat_id=CHAT_ID, document=open(file_path, 'rb'))
+    await context.bot.send_document(chat_id=CHAT_ID, document=open(TEST_FILE_PATH, 'rb'))
 
     # Notify the user that the file was sent
     await update.message.reply_text("📂 The file has been sent!")
 
 # Function to send an image
 async def send_image(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # Define the path to your image file (example: 'path/to/your/image.jpg')
-    image_path = 'D:\Job\DecorAuto\TelegramBot\sun.png'
 
     # Send the image to the chat
-    await context.bot.send_photo(chat_id=CHAT_ID, photo=open(image_path, 'rb'))
+    await context.bot.send_photo(chat_id=CHAT_ID, photo=open(TEST_IMG_PATH, 'rb'))
 
     # Notify the user that the image was sent
     await update.message.reply_text("🖼️ The image has been sent!")
@@ -56,22 +54,17 @@ async def send_initial_message(app):
 
 # Function to send a file (e.g., a document)
 async def send_immediate_file(app):
-    # Define the path to your file (example: 'path/to/your/file.pdf')
-    file_path = 'D:\Job\DecorAuto\TelegramBot\hello.txt'
 
     # Send the file to the chat
-    await app.bot.send_document(chat_id=CHAT_ID, document=open(file_path, 'rb'))
+    await app.bot.send_document(chat_id=CHAT_ID, document=open(TEST_FILE_PATH, 'rb'))
 
     # Notify that the file was sent
     print("File sent successfully!")  # Optionally log to the console
 
 # Function to send an image
 async def send_immediate_image(app):
-    # Define the path to your image file (example: 'path/to/your/image.jpg')
-    image_path = 'D:\Job\DecorAuto\TelegramBot\sun.png'
-
     # Send the image to the chat
-    await app.bot.send_photo(chat_id=CHAT_ID, photo=open(image_path, 'rb'))
+    await app.bot.send_photo(chat_id=CHAT_ID, photo=open(TEST_IMG_PATH, 'rb'))
 
     # Notify that the image was sent
     print("Image sent successfully!")  # Optionally log to the console
